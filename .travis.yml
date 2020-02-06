@@ -39,7 +39,7 @@ deploy:
      secret_access_key: $AWS_SECRET_KEY
      
      bucket: iamchan-build
-     key: springboot2-aws-board.zip
+     key: iamchan_test.zip
      bundle_type: zip
      application: iamchan-test-webservice
      
