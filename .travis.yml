@@ -1,0 +1,35 @@
+language: java
+jdk:
+  - openjdk8
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
+script: "./gradlew clean build"
+
+before_deploy:
+   - zip -r springboot2-aws-board *
+   - mkdir -p deploy
+   - mv springboot2-aws-board.zip deploy/springboot2-aws-board.zip
+   
+deploy:
+   - provider: s3
+     access_key_id: $AWS_ACCESS_KEY
+     secret_key_id: $AWS_SECRET_KEY
+     bucket: iamchan_build
+     region: ap-northeast-2
+     skip_cleanup: true
+     acl: private
+     local_dir: deploy
+     wait-until-deployed: true
+
+notifications:
+   email:
+      recipients:
+         - gmu01026@gmail.com
